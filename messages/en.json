@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "feed": "Feed",
+    "newPlaylist": "New Playlist",
+    "profile": "Profile",
+    "settings": "Settings",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up"
+  },
+  "home": {
+    "title": "Vibe",
+    "subtitle": "Express yourself through music",
+    "popular": "Popular Playlists",
+    "latest": "Latest Playlists",
+    "empty": "No playlists yet"
+  },
+  "explore": {
+    "title": "Explore",
+    "searchPlaceholder": "Search playlists, artists, tags...",
+    "noResults": "No results found",
+    "allTags": "All Tags"
+  },
+  "playlist": {
+    "new": "New Playlist",
+    "edit": "Edit",
+    "delete": "Delete",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter playlist name",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Describe your playlist",
+    "tagsLabel": "Tags",
+    "tagsPlaceholder": "Type a tag and press Enter",
+    "isPublic": "Public",
+    "isPrivate": "Private",
+    "save": "Save",
+    "cancel": "Cancel",
+    "tracks": "Tracks",
+    "addTrack": "Add Track",
+    "noTracks": "No tracks yet",
+    "likes": "Likes",
+    "by": "by",
+    "deleteConfirm": "Are you sure you want to delete?",
+    "deleteSuccess": "Playlist deleted",
+    "saveSuccess": "Saved successfully",
+    "searchYoutube": "Search YouTube",
+    "searchYoutubePlaceholder": "Search for a song or artist...",
+    "addToPlaylist": "Add",
+    "duration": "Duration",
+    "trackAdded": "Track added",
+    "trackRemoved": "Track removed"
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "prev": "Previous",
+    "next": "Next",
+    "like": "Like",
+    "unlike": "Unlike",
+    "nowPlaying": "Now Playing"
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "signupTitle": "Sign Up",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "loginButton": "Login",
+    "signupButton": "Sign Up",
+    "googleLogin": "Continue with Google",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginError": "Invalid email or password",
+    "signupSuccess": "Account created successfully",
+    "signup": "Sign Up",
+    "login": "Login"
+  },
+  "profile": {
+    "playlists": "Playlists",
+    "followers": "Followers",
+    "following": "Following",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "editProfile": "Edit Profile",
+    "noPlaylists": "No playlists yet"
+  },
+  "feed": {
+    "title": "Following Feed",
+    "empty": "New playlists from people you follow will appear here",
+    "suggestion": "Try following someone new"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "back": "Back",
+    "notFound": "Page not found",
+    "goHome": "Go Home",
+    "loadMore": "Load more",
+    "share": "Share",
+    "copied": "Copied!"
+  }
+}
