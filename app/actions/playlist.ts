@@ -14,6 +14,7 @@ const PlaylistSchema = z.object({
   description: z.string().max(500).optional(),
   isPublic: z.boolean().default(true),
   tags: z.array(z.string()).optional(),
+  coverUrl: z.string().optional(),
 })
 
 const TrackSchema = z.object({
@@ -36,11 +37,44 @@ export async function createPlaylist(data: z.infer<typeof PlaylistSchema>) {
     isPublic: validated.isPublic,
     userId: session.user.id,
     tags: validated.tags ?? [],
+    coverUrl: validated.coverUrl,
   })
 
   revalidatePath('/ko')
   revalidatePath('/en')
   return { id: playlist._id.toString() }
+}
+
+export async function createPlaylistWithTracks(
+  data: z.infer<typeof PlaylistSchema>,
+  tracks: z.infer<typeof TrackSchema>[]
+) {
+  const session = await auth()
+  if (!session?.user?.id) throw new Error('Unauthorized')
+  const validated = PlaylistSchema.parse(data)
+
+  await connectDB()
+  const playlist = await Playlist.create({
+    title: validated.title,
+    description: validated.description,
+    isPublic: validated.isPublic,
+    userId: session.user.id,
+    tags: validated.tags ?? [],
+    coverUrl: validated.coverUrl,
+  })
+
+  const playlistId = playlist._id.toString()
+
+  if (tracks.length > 0) {
+    const validatedTracks = tracks.map((t) => TrackSchema.parse(t))
+    await Track.insertMany(
+      validatedTracks.map((t, i) => ({ ...t, order: i, playlistId }))
+    )
+  }
+
+  revalidatePath('/ko')
+  revalidatePath('/en')
+  return { id: playlistId }
 }
 
 export async function updatePlaylist(id: string, data: Partial<z.infer<typeof PlaylistSchema>>) {
@@ -55,6 +89,7 @@ export async function updatePlaylist(id: string, data: Partial<z.infer<typeof Pl
   if (data.description !== undefined) playlist.description = data.description
   if (data.isPublic !== undefined) playlist.isPublic = data.isPublic
   if (data.tags !== undefined) playlist.tags = data.tags
+  if (data.coverUrl !== undefined) playlist.coverUrl = data.coverUrl
   await playlist.save()
 
   revalidatePath(`/ko/playlist/${id}`)

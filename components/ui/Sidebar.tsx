@@ -4,6 +4,7 @@ import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
+import { useTheme } from './ThemeProvider'
 
 function NavItem({
   href,
@@ -19,14 +20,10 @@ function NavItem({
   return (
     <Link
       href={href}
-      className={`
-        flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200
-        group/item
-        ${active
-          ? 'bg-zinc-800 text-white'
-          : 'text-zinc-400 hover:bg-zinc-800/70 hover:text-white'
-        }
-      `}
+      style={active ? { background: 'var(--bg-secondary)', color: 'var(--foreground)' } : { color: 'var(--text-muted)' }}
+      className="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 group/item hover:opacity-100"
+      onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = 'var(--bg-hover)' }}
+      onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
     >
       <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
         {icon}
@@ -43,19 +40,15 @@ export default function Sidebar() {
   const params = useParams()
   const pathname = usePathname()
   const locale = (params?.locale as string) || 'ko'
+  const { theme, toggleTheme } = useTheme()
 
   const isActive = (path: string) => pathname.startsWith(`/${locale}${path}`)
 
   return (
-    <aside className="
-      group
-      fixed left-0 top-0 h-full z-50
-      flex flex-col
-      bg-[#0a0a0a] border-r border-zinc-800
-      w-[68px] hover:w-52
-      transition-all duration-300 ease-in-out
-      overflow-hidden
-    ">
+    <aside
+      className="group fixed left-0 top-0 h-full z-50 flex flex-col w-[68px] hover:w-52 transition-all duration-300 ease-in-out overflow-hidden"
+      style={{ background: 'var(--background)', borderRight: '1px solid var(--border)' }}
+    >
       {/* Logo */}
       <div className="px-3 py-5 mb-2">
         <Link href={`/${locale}`} className="flex items-center gap-4">
@@ -119,8 +112,33 @@ export default function Sidebar() {
         )}
       </nav>
 
-      {/* Bottom: profile / login */}
+      {/* Bottom: theme toggle + profile / login */}
       <div className="px-2 pb-4 flex flex-col gap-1">
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          style={{ color: 'var(--text-muted)' }}
+          className="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 w-full"
+          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--bg-hover)' }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '' }}
+        >
+          <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
+            {theme === 'dark' ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                <circle cx="12" cy="12" r="5" />
+                <path strokeLinecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+              </svg>
+            )}
+          </span>
+          <span className="text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300 w-0 opacity-0 group-hover:w-28 group-hover:opacity-100">
+            {theme === 'dark' ? '라이트 모드' : '다크 모드'}
+          </span>
+        </button>
+
         {session ? (
           <>
             <NavItem
@@ -137,7 +155,7 @@ export default function Sidebar() {
                     className="rounded-full"
                   />
                 ) : (
-                  <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-[10px] font-bold">
+                  <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-[10px] font-bold text-white">
                     {session.user?.name?.[0]?.toUpperCase() || 'U'}
                   </div>
                 )
@@ -145,7 +163,10 @@ export default function Sidebar() {
             />
             <button
               onClick={() => signOut()}
-              className="flex items-center gap-4 px-3 py-3 rounded-xl text-zinc-500 hover:bg-zinc-800/70 hover:text-red-400 transition-all duration-200 w-full"
+              style={{ color: 'var(--text-muted)' }}
+              className="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 w-full"
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--bg-hover)' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '' }}
             >
               <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">

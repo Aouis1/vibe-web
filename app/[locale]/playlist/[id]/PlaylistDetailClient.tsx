@@ -51,11 +51,11 @@ export default function PlaylistDetailClient({
     <div className="space-y-4">
       <div>
         <div className="flex items-start justify-between gap-4">
-          <h1 className="text-2xl font-bold text-zinc-100">{playlist.title}</h1>
+          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{playlist.title}</h1>
           <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={handleShare}
-              className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-full text-xs transition"
+              className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-full text-xs transition"
             >
               {copied ? '✓' : 'Share'}
             </button>
@@ -63,7 +63,7 @@ export default function PlaylistDetailClient({
               <>
                 <Link
                   href={`/${locale}/playlist/${playlist.id}/edit`}
-                  className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-full text-xs transition"
+                  className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-full text-xs transition"
                 >
                   {t('edit')}
                 </Link>
@@ -80,7 +80,7 @@ export default function PlaylistDetailClient({
         </div>
 
         {playlist.description && (
-          <p className="text-zinc-400 text-sm mt-2">{playlist.description}</p>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm mt-2">{playlist.description}</p>
         )}
 
         <div className="flex items-center gap-3 mt-3">
@@ -101,11 +101,13 @@ export default function PlaylistDetailClient({
                 {playlist.user.name?.[0]?.toUpperCase() || 'U'}
               </div>
             )}
-            <span className="text-sm text-zinc-400">{playlist.user.name || 'Anonymous'}</span>
+            <span className="text-sm text-zinc-600 dark:text-zinc-400">{playlist.user.name || 'Anonymous'}</span>
           </Link>
-          <span className="text-zinc-700">·</span>
+          <span className="text-zinc-400 dark:text-zinc-700">·</span>
           <span className={`text-xs px-2 py-0.5 rounded-full ${
-            playlist.isPublic ? 'bg-green-900/30 text-green-400' : 'bg-zinc-800 text-zinc-500'
+            playlist.isPublic
+              ? 'bg-green-900/30 text-green-400'
+              : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
           }`}>
             {playlist.isPublic ? t('isPublic') : t('isPrivate')}
           </span>
@@ -118,7 +120,7 @@ export default function PlaylistDetailClient({
             <Link
               key={tag}
               href={`/${locale}/explore?tag=${tag}`}
-              className="text-xs bg-zinc-800 hover:bg-violet-900/40 text-zinc-400 hover:text-violet-300 px-3 py-1 rounded-full transition"
+              className="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-violet-100 dark:hover:bg-violet-900/40 hover:text-violet-700 dark:hover:text-violet-300 px-3 py-1 rounded-full transition"
             >
               #{tag}
             </Link>

@@ -6,6 +6,7 @@ import '../globals.css'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/lib/auth'
 import Sidebar from '@/components/ui/Sidebar'
+import ThemeProvider from '@/components/ui/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,14 +33,16 @@ export default async function LocaleLayout({
   const session = await auth()
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className="dark" suppressHydrationWarning>
       <body className={inter.className}>
         <SessionProvider session={session}>
           <NextIntlClientProvider messages={messages}>
-            <div className="flex min-h-screen">
-              <Sidebar />
-              <main className="flex-1 ml-[68px] min-h-screen">{children}</main>
-            </div>
+            <ThemeProvider>
+              <div className="flex min-h-screen">
+                <Sidebar />
+                <main className="flex-1 ml-[68px] min-h-screen">{children}</main>
+              </div>
+            </ThemeProvider>
           </NextIntlClientProvider>
         </SessionProvider>
       </body>

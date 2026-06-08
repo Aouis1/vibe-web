@@ -55,6 +55,7 @@ export default async function ExplorePage({
         user: user
           ? { id: (user as any)._id.toString(), name: (user as any).name ?? null, image: (user as any).image ?? null }
           : { id: pl.userId, name: null, image: null },
+        tags: (pl.tags || []) as string[],
         tracks: tracks.map((t: any) => ({ thumbnailUrl: t.thumbnailUrl })),
         _count: { likes: likeCount, tracks: trackCount },
       }

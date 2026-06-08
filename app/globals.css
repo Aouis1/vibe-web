@@ -4,12 +4,29 @@
 
 @layer base {
   :root {
+    --background: #ffffff;
+    --foreground: #18181b;
+    --bg-secondary: #f4f4f5;
+    --bg-hover: rgba(244, 244, 245, 0.8);
+    --border: #e4e4e7;
+    --text-muted: #71717a;
+    --text-subtle: #a1a1aa;
+  }
+
+  html.dark {
     --background: #0a0a0a;
-    --foreground: #f5f5f5;
+    --foreground: #f4f4f5;
+    --bg-secondary: #18181b;
+    --bg-hover: rgba(39, 39, 42, 0.7);
+    --border: #27272a;
+    --text-muted: #a1a1aa;
+    --text-subtle: #71717a;
   }
 
   body {
-    @apply bg-[#0a0a0a] text-[#f5f5f5] antialiased;
+    @apply antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 
   * {
@@ -60,6 +77,6 @@
 
   /* Skeleton loading */
   .skeleton {
-    @apply bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-800 bg-[length:200%_100%] animate-pulse rounded;
+    @apply bg-gradient-to-r from-zinc-200 via-zinc-100 to-zinc-200 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-800 bg-[length:200%_100%] animate-pulse rounded;
   }
 }

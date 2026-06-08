@@ -56,7 +56,7 @@ export default function TrackList({
           className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition ${
             index === currentIndex
               ? 'bg-violet-900/40 border border-violet-700/50'
-              : 'hover:bg-zinc-800'
+              : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
           }`}
         >
           <span className="text-xs text-zinc-500 w-5 text-center">{index + 1}</span>
@@ -68,10 +68,10 @@ export default function TrackList({
             className="rounded object-cover flex-shrink-0"
           />
           <div className="flex-1 min-w-0">
-            <p className={`text-sm font-medium truncate ${index === currentIndex ? 'text-violet-300' : 'text-zinc-100'}`}>
+            <p className={`text-sm font-medium truncate ${index === currentIndex ? 'text-violet-300' : 'text-zinc-900 dark:text-zinc-100'}`}>
               {track.title}
             </p>
-            <p className="text-xs text-zinc-400 truncate">{track.artist}</p>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 truncate">{track.artist}</p>
           </div>
           {track.duration && (
             <span className="text-xs text-zinc-500 flex-shrink-0">{track.duration}</span>
@@ -80,7 +80,7 @@ export default function TrackList({
             <button
               onClick={(e) => handleRemove(e, track.id)}
               disabled={removing === track.id}
-              className="p-1 text-zinc-600 hover:text-red-400 transition flex-shrink-0"
+              className="p-1 text-zinc-400 dark:text-zinc-600 hover:text-red-400 transition flex-shrink-0"
             >
               {removing === track.id ? (
                 <span className="text-xs">...</span>

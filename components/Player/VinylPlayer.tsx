@@ -242,7 +242,7 @@ export default function VinylPlayer({
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {/* LP Turntable Stage */}
+      {/* LP Turntable Stage — intentionally stays dark (it's a turntable) */}
       <div className="relative w-72 h-72 select-none">
         {/* Turntable base */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-zinc-800 to-zinc-900 shadow-2xl border border-zinc-700" />
@@ -326,11 +326,11 @@ export default function VinylPlayer({
 
       {/* Track Info */}
       <div className="text-center">
-        <h3 className="text-lg font-semibold text-zinc-100 max-w-xs truncate">
+        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 max-w-xs truncate">
           {currentTrack.title}
         </h3>
-        <p className="text-sm text-zinc-400 mt-1">{currentTrack.artist}</p>
-        <p className="text-xs text-zinc-600 mt-1">{playlistTitle}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">{currentTrack.artist}</p>
+        <p className="text-xs text-zinc-500 mt-1">{playlistTitle}</p>
       </div>
 
       {/* Equalizer (only visible when playing) */}
@@ -351,7 +351,7 @@ export default function VinylPlayer({
         <div
           ref={progressRef}
           onClick={seek}
-          className="h-1.5 bg-zinc-700 rounded-full cursor-pointer group"
+          className="h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-full cursor-pointer group"
         >
           <div
             className="h-full bg-violet-500 rounded-full relative transition-all"
@@ -370,7 +370,7 @@ export default function VinylPlayer({
       <div className="flex items-center gap-6">
         <button
           onClick={goPrev}
-          className="text-zinc-400 hover:text-white transition"
+          className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition"
           aria-label={t('prev')}
         >
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -384,11 +384,11 @@ export default function VinylPlayer({
           aria-label={isPlaying ? t('pause') : t('play')}
         >
           {isPlaying ? (
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
             </svg>
           ) : (
-            <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           )}
@@ -396,7 +396,7 @@ export default function VinylPlayer({
 
         <button
           onClick={goNext}
-          className="text-zinc-400 hover:text-white transition"
+          className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition"
           aria-label={t('next')}
         >
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -429,7 +429,7 @@ export default function VinylPlayer({
       </div>
 
       {/* Track position */}
-      <p className="text-xs text-zinc-600">
+      <p className="text-xs text-zinc-500">
         {currentIndex + 1} / {tracks.length}
       </p>
     </div>

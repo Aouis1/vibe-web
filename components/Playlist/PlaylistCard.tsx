@@ -48,8 +48,8 @@ export default function PlaylistCard({ playlist, currentUserId, liked: initialLi
 
   return (
     <Link href={`/${locale}/playlist/${playlist.id}`} className="block group">
-      <div className="bg-zinc-900 rounded-xl overflow-hidden hover:bg-zinc-800 transition-colors">
-        <div className="relative aspect-video bg-zinc-800">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+        <div className="relative aspect-video bg-zinc-100 dark:bg-zinc-800">
           {coverImage ? (
             <Image
               src={coverImage}
@@ -70,7 +70,7 @@ export default function PlaylistCard({ playlist, currentUserId, liked: initialLi
         </div>
 
         <div className="p-4">
-          <h3 className="font-semibold text-zinc-100 truncate group-hover:text-violet-400 transition">
+          <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 truncate group-hover:text-violet-400 transition">
             {playlist.title}
           </h3>
           {playlist.description && (

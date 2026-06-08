@@ -54,12 +54,12 @@ export default function FeedCard({
   }
 
   return (
-    <div className="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors">
       {/* Cover Image */}
       <Link href={`/${locale}/playlist/${playlist.id}`}>
-        <div className="relative aspect-square bg-zinc-800 group">
+        <div className="relative aspect-square bg-zinc-100 dark:bg-zinc-800 group">
           {coverImage ? (
-            <Image src={coverImage} alt={playlist.title} fill className="object-cover" />
+            <Image src={coverImage} alt={playlist.title} fill className="object-cover" unoptimized={coverImage.startsWith('data:')} />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-violet-900 to-zinc-900">
               <svg className="w-16 h-16 text-violet-400" fill="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@ export default function FeedCard({
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex-1 min-w-0">
             <Link href={`/${locale}/playlist/${playlist.id}`}>
-              <h3 className="font-semibold text-zinc-100 truncate hover:text-violet-400 transition">
+              <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 truncate hover:text-violet-400 transition">
                 {playlist.title}
               </h3>
             </Link>
@@ -159,7 +159,7 @@ export default function FeedCard({
 
           {/* Track preview */}
           {playlist.tracks[0] && (
-            <p className="text-xs text-zinc-600 truncate max-w-[120px]">
+            <p className="text-xs text-zinc-500 dark:text-zinc-600 truncate max-w-[120px]">
               {playlist.tracks[0].title}
             </p>
           )}
