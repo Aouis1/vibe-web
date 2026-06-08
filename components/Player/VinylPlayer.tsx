@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { toggleLike } from '@/app/actions/playlist'
+import { useTheme } from '@/components/ui/ThemeProvider'
 
 declare global {
   interface Window {
@@ -67,6 +68,8 @@ export default function VinylPlayer({
   isLiked: initialIsLiked = false,
 }: VinylPlayerProps) {
   const t = useTranslations('player')
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
   const playerRef = useRef<YTPlayer | null>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -78,6 +81,7 @@ export default function VinylPlayer({
   const [isLiked, setIsLiked] = useState(initialIsLiked)
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const [apiReady, setApiReady] = useState(false)
+  const playerReadyRef = useRef(false)
 
   const currentTrack = tracks[currentIndex]
 
@@ -126,6 +130,7 @@ export default function VinylPlayer({
       },
       events: {
         onReady: (event) => {
+          playerReadyRef.current = true
           setDuration(event.target.getDuration())
         },
         onStateChange: (event) => {
@@ -147,6 +152,7 @@ export default function VinylPlayer({
     return () => {
       playerRef.current?.destroy()
       playerRef.current = null
+      playerReadyRef.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiReady])
@@ -181,7 +187,7 @@ export default function VinylPlayer({
   }, [isPlaying])
 
   const togglePlay = useCallback(() => {
-    if (!playerRef.current) return
+    if (!playerRef.current || !playerReadyRef.current) return
     if (isPlaying) {
       playerRef.current.pauseVideo()
     } else {
@@ -286,12 +292,14 @@ export default function VinylPlayer({
             style={{
               width: '6px',
               height: '100px',
-              background: 'linear-gradient(to bottom, #a1a1aa, #71717a)',
+              background: isDark
+                ? 'linear-gradient(to bottom, #e4e4e7, #a1a1aa)'
+                : 'linear-gradient(to bottom, #52525b, #27272a)',
               borderRadius: '3px 3px 1px 1px',
               position: 'absolute',
               top: '16px',
               right: '16px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.15)',
             }}
           >
             {/* Needle tip */}
@@ -303,7 +311,7 @@ export default function VinylPlayer({
                 transform: 'translateX(-50%)',
                 width: '3px',
                 height: '8px',
-                background: '#e4e4e7',
+                background: isDark ? '#d4d4d8' : '#3f3f46',
                 borderRadius: '0 0 2px 2px',
               }}
             />
@@ -316,9 +324,10 @@ export default function VinylPlayer({
               right: '10px',
               width: '12px',
               height: '12px',
-              background: '#a1a1aa',
+              background: isDark ? '#e4e4e7' : '#52525b',
               borderRadius: '50%',
-              border: '2px solid #71717a',
+              border: isDark ? '2px solid #a1a1aa' : '2px solid #27272a',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.4)',
             }}
           />
         </div>
