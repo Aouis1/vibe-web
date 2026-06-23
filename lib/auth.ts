@@ -6,6 +6,39 @@ import bcrypt from 'bcryptjs'
 import { clientPromise, connectDB } from './mongodb'
 import { User } from './models/User'
 
+function NaverProvider() {
+  return {
+    id: 'naver',
+    name: 'Naver',
+    type: 'oauth' as const,
+    authorization: {
+      url: 'https://nid.naver.com/oauth2.0/authorize',
+      params: { response_type: 'code' },
+    },
+    token: 'https://nid.naver.com/oauth2.0/token',
+    userinfo: {
+      url: 'https://openapi.naver.com/v1/nid/me',
+      async request({ tokens }: { tokens: { access_token?: string } }) {
+        const res = await fetch('https://openapi.naver.com/v1/nid/me', {
+          headers: { Authorization: `Bearer ${tokens.access_token}` },
+        })
+        const data = await res.json()
+        return data.response
+      },
+    },
+    profile(profile: Record<string, string>) {
+      return {
+        id: profile.id,
+        name: profile.name,
+        email: profile.email,
+        image: profile.profile_image ?? null,
+      }
+    },
+    clientId: process.env.NAVER_CLIENT_ID!,
+    clientSecret: process.env.NAVER_CLIENT_SECRET!,
+  }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   providers: [
@@ -13,6 +46,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
+    NaverProvider(),
     CredentialsProvider({
       name: 'credentials',
       credentials: {

@@ -7,6 +7,10 @@ export const authConfig = {
   session: { strategy: 'jwt' as const },
   pages: { signIn: '/ko/login' },
   callbacks: {
+    authorized() {
+      // 리다이렉트는 미들웨어에서 직접 처리하므로 항상 true 반환
+      return true
+    },
     jwt({ token, user }) {
       if (user) token.id = user.id
       return token

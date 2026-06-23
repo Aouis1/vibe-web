@@ -73,6 +73,7 @@
     "loginButton": "Login",
     "signupButton": "Sign Up",
     "googleLogin": "Continue with Google",
+    "naverLogin": "Continue with Naver",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "loginError": "Invalid email or password",
